@@ -1,0 +1,6 @@
+{"order_id":"O1001","customer_id":"C101","product_id":"P11","quantity":2,"unit_price":25.5,"event_ts":"2026-03-30 10:15:00","event_type":"ORDER_CREATED","source_system":"web"}
+{"order_id":"O1002","customer_id":"C102","product_id":"P12","quantity":1,"unit_price":40.0,"event_ts":"2026-03-30 10:15:05","event_type":"ORDER_CREATED","source_system":"mobile"}
+{"order_id":null,"customer_id":"C103","product_id":"P13","quantity":3,"unit_price":15.0,"event_ts":"2026-03-30 10:15:10","event_type":"ORDER_CREATED","source_system":"web"}
+{"order_id":"O1004","customer_id":null,"product_id":"P14","quantity":1,"unit_price":12.0,"event_ts":"2026-03-30 10:15:15","event_type":"ORDER_CREATED","source_system":"web"}
+{"order_id":"O1005","customer_id":"C105","product_id":"P15","quantity":0,"unit_price":50.0,"event_ts":"2026-03-30 10:15:20","event_type":"ORDER_CREATED","source_system":"mobile"}
+{"order_id":"O1006","customer_id":"C106","product_id":"P16","quantity":5,"unit_price":18.0,"event_ts":"2035-01-01 00:00:00","event_type":"ORDER_CREATED","source_system":"api"}
