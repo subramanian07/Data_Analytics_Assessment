@@ -1,0 +1,249 @@
+{
+    "name": "pl_retail_analytics_medallion",
+    "objectId": "3e564f24-2533-40f5-a444-61abbb794170",
+    "properties": {
+        "activities": [
+            {
+                "name": "NB_01_Bronze_Ingestion",
+                "type": "TridentNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 3,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "f537dc5f-c532-4535-9e71-f115efd424af",
+                    "workspaceId": "3ee69bfe-2a30-439f-81ad-392f2f8bb36a",
+                    "parameters": {
+                        "environment": {
+                            "value": {
+                                "value": "@pipeline().parameters.environment",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "run_id": {
+                            "value": {
+                                "value": "@pipeline().RunId",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "rerun_mode": {
+                            "value": {
+                                "value": "@pipeline().parameters.rerun_mode",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "pipeline_start_time": {
+                            "value": {
+                                "value": "@pipeline().parameters.pipeline_start_time",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "pipeline_name": {
+                            "value": {
+                                "value": "@pipeline().parameters.pipeline_name",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "NB_02_Silver_Transformation",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "NB_01_Bronze_Ingestion",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "c7f92239-3bd7-4416-980e-9002b45832fb",
+                    "workspaceId": "3ee69bfe-2a30-439f-81ad-392f2f8bb36a",
+                    "parameters": {
+                        "environment": {
+                            "value": {
+                                "value": "@pipeline().parameters.environment",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "run_id": {
+                            "value": {
+                                "value": "@pipeline().RunId",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "rerun_mode": {
+                            "value": {
+                                "value": "@pipeline().parameters.rerun_mode",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "pipeline_start_time": {
+                            "value": {
+                                "value": "@pipeline().parameters.pipeline_start_time",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "pipeline_name": {
+                            "value": {
+                                "value": "@pipeline().parameters.pipeline_name",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "NB_03_Gold_Curated",
+                "type": "TridentNotebook",
+                "dependsOn": [
+                    {
+                        "activity": "NB_02_Silver_Transformation",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.12:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "typeProperties": {
+                    "notebookId": "6e7c6b5a-6973-4fe2-ba14-ea0640dcc523",
+                    "workspaceId": "3ee69bfe-2a30-439f-81ad-392f2f8bb36a",
+                    "parameters": {
+                        "environment": {
+                            "value": {
+                                "value": "@pipeline().parameters.environment",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "run_id": {
+                            "value": {
+                                "value": "@pipeline().RunId",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "rerun_mode": {
+                            "value": {
+                                "value": "@pipeline().parameters.rerun_mode",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "pipeline_start_time": {
+                            "value": {
+                                "value": "@pipeline().parameters.pipeline_start_time",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        },
+                        "pipeline_name": {
+                            "value": {
+                                "value": "@pipeline().parameters.pipeline_name",
+                                "type": "Expression"
+                            },
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Fail_Bronze",
+                "type": "Fail",
+                "dependsOn": [
+                    {
+                        "activity": "NB_01_Bronze_Ingestion",
+                        "dependencyConditions": [
+                            "Failed"
+                        ]
+                    }
+                ],
+                "typeProperties": {
+                    "message": "Bronze notebook execution failed",
+                    "errorCode": "BRONZE_FAILED"
+                }
+            },
+            {
+                "name": "Fail_Silver",
+                "type": "Fail",
+                "dependsOn": [
+                    {
+                        "activity": "NB_02_Silver_Transformation",
+                        "dependencyConditions": [
+                            "Failed"
+                        ]
+                    }
+                ],
+                "typeProperties": {
+                    "message": "Silver notebook execution failed",
+                    "errorCode": "SILVER_FAILED"
+                }
+            },
+            {
+                "name": "Fail_Gold",
+                "type": "Fail",
+                "dependsOn": [
+                    {
+                        "activity": "NB_03_Gold_Curated",
+                        "dependencyConditions": [
+                            "Failed"
+                        ]
+                    }
+                ],
+                "typeProperties": {
+                    "message": "Gold notebook execution failed",
+                    "errorCode": "GOLD_FAILED"
+                }
+            }
+        ],
+        "parameters": {
+            "environment": {
+                "type": "string",
+                "defaultValue": "dev"
+            },
+            "rerun_mode": {
+                "type": "string",
+                "defaultValue": "FULL"
+            },
+            "pipeline_start_time": {
+                "type": "string",
+                "defaultValue": "2026-03-29 10:00:00"
+            },
+            "pipeline_name": {
+                "type": "string",
+                "defaultValue": "pl_retail_analytics_medallion"
+            }
+        },
+        "lastModifiedByObjectId": "1cf57dc4-38ea-4b4c-8d33-6657fc3d24df",
+        "lastPublishTime": "2026-03-29T13:23:03Z"
+    }
+}

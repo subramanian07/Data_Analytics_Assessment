@@ -1,0 +1,20 @@
+CREATE TABLE dbo.dim_customer (
+    customer_key            INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    customer_id             VARCHAR(50) NOT NULL,
+    first_name              VARCHAR(100) NULL,
+    last_name               VARCHAR(100) NULL,
+    gender                  VARCHAR(20) NULL,
+    birth_date              DATE NULL,
+    email                   VARCHAR(255) NULL,
+    city                    VARCHAR(100) NULL,
+    state                   VARCHAR(100) NULL,
+    country                 VARCHAR(100) NULL,
+    postal_code             VARCHAR(20) NULL,
+    region                  VARCHAR(100) NULL,
+    customer_segment        VARCHAR(50) NULL,
+    loyalty_status          VARCHAR(50) NULL,
+    effective_from_date     DATE NOT NULL,
+    effective_to_date       DATE NOT NULL,
+    is_current              CHAR(1) NOT NULL,
+    CONSTRAINT uq_dim_customer UNIQUE (customer_id, effective_from_date)
+);

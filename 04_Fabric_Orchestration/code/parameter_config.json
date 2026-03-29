@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "environment": "dev",
+    "rerun_mode": "FULL",
+    "pipeline_start_time": "2026-03-29 10:00:00",
+    "pipeline_name": "pl_retail_analytics_medallion"
+  },
+  "test": {
+    "environment": "test",
+    "rerun_mode": "FULL",
+    "pipeline_start_time": "2026-03-29 10:00:00",
+    "pipeline_name": "pl_retail_analytics_medallion"
+  },
+  "prod": {
+    "environment": "prod",
+    "rerun_mode": "FULL",
+    "pipeline_start_time": "2026-03-29 10:00:00",
+    "pipeline_name": "pl_retail_analytics_medallion"
+  }
+}
